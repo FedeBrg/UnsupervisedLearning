@@ -1,3 +1,5 @@
+package kohonen;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,7 +8,6 @@ public class Neuron {
     private int x;
     private int y;
     private List<Double> weights;
-    private double output;
 
     public Neuron(int x, int y){
         this.x = x;
@@ -27,17 +28,19 @@ public class Neuron {
     }
 
     public void setWeight(int j, double w){
-        this.weights.set(j,w);
+        this.weights.add(w);
     }
 
     public List<Double> getWeights(){
         return weights;
     }
 
-    public double getOutput(){
-        return output;
+
+    public int getX() {
+        return x;
     }
 
-
-
+    public int getY() {
+        return y;
+    }
 }
