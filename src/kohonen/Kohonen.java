@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Kohonen {
@@ -28,7 +29,7 @@ public class Kohonen {
             for(int j = 0; j<input.size();j++){
                 sum += Math.pow(input.get(j).get(i)-avgs.get(i),2);
             }
-            stds.add(Math.sqrt(sum/input.size()));
+            stds.add(Math.sqrt(sum/(input.size()-1)));
         }
 
         List<List<Double>> normalize = new ArrayList<>();
@@ -41,16 +42,17 @@ public class Kohonen {
             normalize.add(tmp);
         }
 
-        SOMap map = new SOMap(7,7,7,0.1,1);
-        map.initializeNeuronsRandom();
-
-        for(int i = 0; i<10000;i++){
-            for(List<Double> l : normalize){
-                map.train(l);
+        SOMap map = new SOMap(3,3,7,0.1,1);
+//        map.initializeNeuronsRandom();
+        map.initializeNeuronsExamples(normalize);
+        Random r = new Random();
+        for(int i = 0; i<1000;i++){
+            for(int j = 0; j<normalize.size();j++){
+                map.train(normalize.get(j));
             }
         }
 
-        int[][] out = new int[7][7];
+        int[][] out = new int[3][3];
 
         for(List<Double> l : normalize){
             Neuron n = map.getWinner(l);

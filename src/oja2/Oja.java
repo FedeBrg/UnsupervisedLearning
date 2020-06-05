@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Oja {
@@ -42,18 +43,21 @@ public class Oja {
         }
 
         Neuron n = new Neuron(normalize.get(0).size());
+        Random r = new Random();
 
+        for (int i = 0; i < 100000; i++) {
+            //for(int j = 0;j<input.size();j++) {
+                //System.out.println(n.getWeights());
 
-            for (int i = 0; i < 10000; i++) {
-                for(int j = 0;j<input.size();j++) {
+                n.updateWeights(normalize.get(r.nextInt(normalize.size())),i+1);
 
-                n.updateWeights(normalize.get(j));
-                    System.out.println(n.getWeights());
-
-            }
+            //}
+//            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
+//            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
+//            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
         }
-
         System.out.println(n.getWeights());
+
 
     }
 

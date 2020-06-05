@@ -46,6 +46,16 @@ public class SOMap {
         }
     }
 
+    public void initializeNeuronsExamples(List<List<Double>> inputs){
+        Random r = new Random();
+        int i = 5;
+        for(Neuron n : neurons){
+//            n.setWeights(inputs.get(i));
+//            i++;
+            n.setWeights(inputs.get(r.nextInt(inputs.size())));
+        }
+    }
+
 
     public void train(List<Double> input){
 
@@ -67,15 +77,15 @@ public class SOMap {
         }
 
         for(Neuron n : neurons){
-            if(!n.equals(winner)){
+            //if(!n.equals(winner)){
                 double d = n.distance(winner);
-                if(d<=3){ // DEBERIA SER EL RADIO VARIABLE SEGUN EPOCA
+                if(d<=(10.0/(epoch+1))){ // DEBERIA SER EL RADIO VARIABLE SEGUN EPOCA
                     for (int i = 0; i<inputSize;i++){
-                        double newWeight=(input.get(i) - n.getWeight(i)) * getLearningRate(epoch);
+                        double newWeight=n.getWeight(i)+(input.get(i) - n.getWeight(i)) * getLearningRate(epoch);
                         n.setWeight(i, newWeight);
                     }
                 }
-            }
+            //}
         }
 
         epoch++;

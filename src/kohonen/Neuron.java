@@ -31,6 +31,10 @@ public class Neuron {
         this.weights.add(w);
     }
 
+    public void setWeights(List<Double> weights) {
+        this.weights = weights;
+    }
+
     public List<Double> getWeights(){
         return weights;
     }

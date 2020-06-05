@@ -15,9 +15,9 @@ public class Hopfield {
         List<List<Integer>> inputs = new ArrayList<>();
 
         inputs.add(h.readLetter("A"));
-        inputs.add(h.readLetter("X"));
         inputs.add(h.readLetter("J"));
-        inputs.add(h.readLetter("I"));
+        inputs.add(h.readLetter("C"));
+        inputs.add(h.readLetter("M"));
 
         n.initialize(inputs);
 
@@ -27,7 +27,7 @@ public class Hopfield {
         n.loadInput(noisy);
         h.printLetter(noisy);
         System.out.println("-----------------------");
-        for(int i = 0; i< 10000;i++){
+        for(int i = 0; i< 100;i++){
             n.update();
             h.printLetter(n.getCurrentStatus());
 
