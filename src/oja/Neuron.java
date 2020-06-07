@@ -5,37 +5,43 @@ import java.util.List;
 import java.util.Random;
 
 public class Neuron {
-
     private List<Double> weights = new ArrayList<>();
-    private double lr = 0.0001;
 
-    public Neuron(int inputSize){
+    public Neuron(int dim){
         Random r = new Random();
-        for(int i = 0; i< inputSize;i++){
+        for (int i = 0; i< dim;i++){
             weights.add(r.nextDouble());
         }
     }
 
-
     public double calculateY(List<Double> input){
-        double y = 0;
-            for(int i = 0;i<input.size();i++){
-                y+= (input.get(i)*weights.get(i));
-            }
+        double y = 0.0;
+        for(int i = 0; i<input.size();i++){
+            y += input.get(i)*weights.get(i);
+        }
 
         return y;
     }
 
-
-
-    public void updateWeights(List<Double> input,double yg){
-        double dw,w;
+    public void updateWeights(List<Double> input,int a){
+        double dw, w;
         double y = calculateY(input);
+
         for(int i = 0; i<input.size();i++){
             w = weights.get(i);
-            dw = lr*((input.get(i)*yg) - (yg*yg*w));
+            double x = input.get(i)*y;
+            double z = Math.pow(y,2)*w;
+            dw = (0.5/a)*(x-z);
             weights.set(i,w+dw);
         }
+    }
+
+    public double getWeightsMod(){
+        double sum = 0.0;
+        for(Double d : weights){
+            sum+=(d*d);
+        }
+        return Math.sqrt(sum);
     }
 
     public List<Double> getWeights() {

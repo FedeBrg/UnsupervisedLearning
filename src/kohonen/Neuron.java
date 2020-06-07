@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Neuron {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private List<Double> weights;
 
     public Neuron(int x, int y){
@@ -14,7 +14,6 @@ public class Neuron {
         this.y = y;
         weights = new ArrayList<>();
     }
-
 
     public double distance(Neuron other){
         int dx = x - other.x;
@@ -28,7 +27,7 @@ public class Neuron {
     }
 
     public void setWeight(int j, double w){
-        this.weights.add(w);
+        this.weights.set(j,w);
     }
 
     public void setWeights(List<Double> weights) {
@@ -38,7 +37,6 @@ public class Neuron {
     public List<Double> getWeights(){
         return weights;
     }
-
 
     public int getX() {
         return x;

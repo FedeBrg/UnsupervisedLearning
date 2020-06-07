@@ -10,7 +10,7 @@ public class Network {
 
     public Network(int size){
         neurons = new ArrayList<>();
-        for(int i = 0;i<size;i++){
+        for(int i = 0; i < size; i++){
             neurons.add(new Neuron(i));
         }
     }
@@ -23,6 +23,7 @@ public class Network {
                 if(n1.equals(n2)){
                     weights.add(0.0);
                 }
+
                 else{
                     for(List<Integer> l : input){
                         sum += (l.get(n1.getId())*l.get(n2.getId()));
@@ -40,22 +41,24 @@ public class Network {
 
     public void loadInput(List<Integer> input){
 
-        for(int i = 0; i< input.size();i++){
+        for(int i = 0; i < input.size(); i++){
             neurons.get(i).setState(input.get(i));
         }
 
     }
 
-
     public void update(){
         double sum = 0.0;
+
         for(Neuron n : neurons){
-            for(int i = 0; i< neurons.size(); i++){
-                sum+= (neurons.get(i).getState()*n.getWeights().get(i));
+            for(int i = 0; i < neurons.size(); i++){
+                sum += (neurons.get(i).getState() * n.getWeights().get(i));
             }
+
             if(sum != 0){
-                n.setState(sum>0?1:-1);
+                n.setState(sum>0? 1 : -1);
             }
+
             sum = 0;
         }
     }

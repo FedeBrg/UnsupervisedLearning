@@ -1,12 +1,10 @@
 package oja;
 
-import kohonen.Kohonen;
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Oja {
@@ -36,6 +34,7 @@ public class Oja {
 
         List<List<Double>> normalize = new ArrayList<>();
         List<Double> tmp;
+
         for(List<Double> l : input){
             tmp = new ArrayList<>();
             for(int i = 0; i< l.size(); i++){
@@ -44,29 +43,17 @@ public class Oja {
             normalize.add(tmp);
         }
 
+        Neuron n = new Neuron(normalize.get(0).size());
+        Random r = new Random();
 
-        List<List<Double>> t = new ArrayList<>();
-        List<Double> a = new ArrayList<>();
-        for(int i = 0;i<normalize.get(i).size();i++){
-            for(int j = 0; j<normalize.size() ;j++){
-                a.add(normalize.get(j).get(i));
-            }
-            t.add(a);
-            a = new ArrayList<>();
+        for (int i = 0; i < 100000; i++) {
+            n.updateWeights(normalize.get(r.nextInt(normalize.size())),i+1);
         }
 
-
-        Network n = new Network(normalize.size(),normalize.get(0).size());
-
-        for(int i = 0;i<1000000;i++){
-            n.train(normalize);
-//            System.out.println(n.neurons.get(0).getWeights());
+        System.out.println("-- Result (Y1) --");
+        for(int i = 0; i < n.getWeights().size(); i++){
+            System.out.println("X" + i + " = " + n.getWeights().get(i));
         }
-
-        for(Neuron ne : n.getNeurons()){
-            System.out.println(ne.calculateY(normalize.get(0)));
-        }
-
 
     }
 
@@ -91,5 +78,4 @@ public class Oja {
         return l;
 
     }
-
 }
