@@ -1,11 +1,10 @@
 package kohonen;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 
 public class Kohonen {
 
@@ -42,6 +41,8 @@ public class Kohonen {
             normalize.add(tmp);
         }
 
+        List<String> countries = k.readCountries();
+
         SOMap map = new SOMap(3,3,7,0.1,1);
 //        map.initializeNeuronsRandom();
         map.initializeNeuronsExamples(normalize);
@@ -54,10 +55,24 @@ public class Kohonen {
 
         int[][] out = new int[3][3];
 
-        for(List<Double> l : normalize){
-            Neuron n = map.getWinner(l);
+        Map<String,List<String>> m = new HashMap<>();
+
+        for(int i = 0; i< normalize.size();i++){
+            Neuron n = map.getWinner(normalize.get(i));
+            String key = String.format("%d%d",n.getX(),n.getY());
+            if(!m.containsKey(key)){
+                List<String> a  = new ArrayList<>();
+                a.add(countries.get(i));
+                m.put(key,a);
+            }
+            else{
+                m.get(key).add(countries.get(i));
+            }
+//            System.out.printf("%d %d\n",n.getX(),n.getY());
             out[n.getX()][n.getY()] +=1;
         }
+
+        System.out.println(m);
 
         for(int [] a : out){
             for(int b : a){
@@ -91,6 +106,21 @@ public class Kohonen {
         return l;
 
     }
+
+    private List<String> readCountries() throws FileNotFoundException {
+        File inputFile = new File("countries");
+
+        Scanner inputReader = new Scanner(inputFile);
+
+        List<String> l = new ArrayList<>();
+
+        while(inputReader.hasNext()){
+            l.add(inputReader.nextLine());
+        }
+
+        return l;
+    }
+
 
 
     private double calculateStandardDev(List<Double> input)
