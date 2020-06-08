@@ -85,7 +85,7 @@ public class Network {
 
     public List<Integer> noisyLetter(List<Integer> letter){
         List<Integer> noisy = new ArrayList<>();
-        double p = 0.2;
+        double p = 0.3;
         Random  r = new Random();
 
         for(Integer i : letter){

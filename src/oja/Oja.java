@@ -46,6 +46,8 @@ public class Oja {
         Neuron n = new Neuron(normalize.get(0).size());
         Random r = new Random();
 
+        List<String> countries= o.readCountries();
+
         for (int i = 0; i < 100000; i++) {
             n.updateWeights(normalize.get(r.nextInt(normalize.size())),i+1);
         }
@@ -53,6 +55,14 @@ public class Oja {
         System.out.println("-- Result (Y1) --");
         for(int i = 0; i < n.getWeights().size(); i++){
             System.out.println("X" + i + " = " + n.getWeights().get(i));
+        }
+
+        for(int i = 0; i< normalize.size();i++){
+            double sum = 0;
+            for(int j = 0;j<n.getWeights().size();j++){
+                sum+=normalize.get(i).get(j)*n.getWeights().get(j);
+            }
+            System.out.printf("%s: %f\n",countries.get(i),sum);
         }
 
     }
@@ -77,5 +87,19 @@ public class Oja {
 
         return l;
 
+    }
+
+    private List<String> readCountries() throws FileNotFoundException {
+        File inputFile = new File("countries");
+
+        Scanner inputReader = new Scanner(inputFile);
+
+        List<String> l = new ArrayList<>();
+
+        while(inputReader.hasNext()){
+            l.add(inputReader.nextLine());
+        }
+
+        return l;
     }
 }

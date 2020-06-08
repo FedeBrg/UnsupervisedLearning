@@ -20,10 +20,10 @@ public class Hopfield {
 
         List<List<Integer>> inputs = new ArrayList<>();
 
-        inputs.add(h.readLetter("A"));
-        inputs.add(h.readLetter("J"));
         inputs.add(h.readLetter("G"));
-        inputs.add(h.readLetter("M"));
+        inputs.add(h.readLetter("K"));
+        inputs.add(h.readLetter("T"));
+        inputs.add(h.readLetter("V"));
 
         n.initialize(inputs);
 

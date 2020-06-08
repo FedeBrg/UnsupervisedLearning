@@ -1,9 +1,7 @@
 package kohonen;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Kohonen {
 
@@ -66,6 +64,7 @@ public class Kohonen {
 
         SOMap map = new SOMap(rows,cols,inputSize,0.8, Math.sqrt(rows * cols));
         map.initializeNeuronsExamples(normalize);
+//        map.initializeNeuronsRandom();
 
         for(int i = 0; i < 500 * inputSize; i++){
             for(List<Double> doubles : normalize) {
@@ -77,9 +76,9 @@ public class Kohonen {
             double totalSum = 0.0;
             int totalDistances = 0;
             double radius = map.getRadius(i);
-            System.out.println(radius);
+            //System.out.println(radius);
             StringBuilder str = new StringBuilder();
-            str.append("9\n\n");
+            str.append(rows * cols).append("\n\n");
 
             for(Neuron n1 : neurons){
                 totalDistances = 0;
@@ -104,15 +103,31 @@ public class Kohonen {
             } catch (IOException ignored) {}
         }
 
-        int[][] out = new int[rows][cols];
 
-        for(List<Double> l : normalize){
-            Neuron n = map.getWinner(l);
-            out[n.getX()][n.getY()] += 1;
+
+
+        int[][] out = new int[rows][cols];
+        List<String> countries = k.readCountries();
+        Map<String,List<String>> m = new HashMap<>();
+
+        for(int i = 0; i< normalize.size();i++){
+            Neuron n = map.getWinner(normalize.get(i));
+            String key = String.format("%d%d",n.getX(),n.getY());
+            if(!m.containsKey(key)){
+                List<String> a  = new ArrayList<>();
+                a.add(countries.get(i));
+                m.put(key,a);
+            }
+            else{
+                m.get(key).add(countries.get(i));
+            }
+//            System.out.printf("%d %d\n",n.getX(),n.getY());
+            out[n.getX()][n.getY()] +=1;
         }
 
+
         StringBuilder str = new StringBuilder();
-        str.append("9\n\n");
+        str.append(rows * cols).append("\n\n");
 
         /* Just for result */
         try {
@@ -121,18 +136,27 @@ public class Kohonen {
 
         System.out.println("Kohonen network -- Output:");
 
-        int i = 0, j = 0;
-
-        for(int [] a : out){
-            for(int b : a){
-                str.append(String.format("%d\t%d\t%d\n", i, j, b));
-                j++;
-                System.out.printf("%d\t",b);
+        //int i = 0, j = 0;
+        for(int i = 0; i< rows;i++){
+            for(int j = 0;j<cols;j++){
+                str.append(String.format("%d\t%d\t%d\n", i, j, out[i][j]));
+                System.out.printf("%d\t",out[i][j]);
             }
-            j = 0;
-            i++;
             System.out.println();
         }
+        System.out.println(m);
+
+
+//        for(int [] a : out){
+//            for(int b : a){
+//                str.append(String.format("%d\t%d\t%d\n", i, j, b));
+//                j++;
+//                System.out.printf("%d\t",b);
+//            }
+//            j = 0;
+//            i++;
+//            System.out.println();
+//        }
 
         try {
             BufferedWriter o = new BufferedWriter(new FileWriter("result.txt", true));
@@ -149,6 +173,20 @@ public class Kohonen {
         }
 
         return Math.sqrt(acum);
+    }
+
+    private List<String> readCountries() throws FileNotFoundException {
+        File inputFile = new File("countries");
+
+        Scanner inputReader = new Scanner(inputFile);
+
+        List<String> l = new ArrayList<>();
+
+        while(inputReader.hasNext()){
+            l.add(inputReader.nextLine());
+        }
+
+        return l;
     }
 
     private List<List<Double>> readFiles() throws FileNotFoundException {
