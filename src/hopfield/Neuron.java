@@ -5,7 +5,6 @@ import java.util.List;
 public class Neuron {
 
     private List<Double> weights;
-    private double bias;
     private int id;
     private int state;
 
@@ -33,11 +32,5 @@ public class Neuron {
         return id;
     }
 
-    public double getBias() {
-        return bias;
-    }
 
-    public void setBias(double bias) {
-        this.bias = bias;
-    }
 }

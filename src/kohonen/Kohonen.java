@@ -39,6 +39,7 @@ public class Kohonen {
             avgs.add(sum/input.size());
         }
 
+
         for(int i = 0; i < input.get(0).size(); i++){
             double sum = 0.0;
 
@@ -62,14 +63,19 @@ public class Kohonen {
             normalize.add(tmp);
         }
 
-        SOMap map = new SOMap(rows,cols,inputSize,0.8, Math.sqrt(rows * cols));
-        map.initializeNeuronsExamples(normalize);
-//        map.initializeNeuronsRandom();
+        System.out.println(normalize);
 
-        for(int i = 0; i < 500 * inputSize; i++){
-            for(List<Double> doubles : normalize) {
-                map.train(doubles,i);
-            }
+        SOMap map = new SOMap(rows,cols,inputSize,0.8, Math.sqrt(rows * cols));
+//        map.initializeNeuronsExamples(normalize);
+        map.initializeNeuronsRandom();
+        Random r = new Random();
+        for(int i = 0; i < 500 * 28; i++){
+//            for(List<Double> doubles : normalize) {
+//                map.train(doubles,i);
+                map.train(normalize.get(r.nextInt(normalize.size())),i);
+//            }
+
+
 
             List<Neuron> neurons = map.neurons;
             double distance;

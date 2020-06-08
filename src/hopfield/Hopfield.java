@@ -27,13 +27,6 @@ public class Hopfield {
 
         n.initialize(inputs);
 
-        /*List<Integer> notACharacter = h.readLetter("NotACharacter");
-        n.loadInput(notACharacter);
-        h.printLetter(notACharacter);
-        for(int i = 0; i < 20; i++){
-            n.update();
-        }
-        h.printLetter(n.getCurrentStatus());*/
 
         for(int i = 0; i < inputs.size(); i++){
             System.out.println("-----------------------");

@@ -73,19 +73,11 @@ public class Network {
         return status;
     }
 
-    public boolean compareStatus(List<Integer> s1, List<Integer> s2){
-        for(int i = 0; i<s1.size();i++){
-            if(!s1.get(i).equals(s2.get(i))){
-                return false;
-            }
-        }
 
-        return true;
-    }
 
     public List<Integer> noisyLetter(List<Integer> letter){
         List<Integer> noisy = new ArrayList<>();
-        double p = 0.3;
+        double p = 0.1;
         Random  r = new Random();
 
         for(Integer i : letter){

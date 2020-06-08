@@ -36,13 +36,7 @@ public class Neuron {
         }
     }
 
-    public double getWeightsMod(){
-        double sum = 0.0;
-        for(Double d : weights){
-            sum+=(d*d);
-        }
-        return Math.sqrt(sum);
-    }
+
 
     public List<Double> getWeights() {
         return weights;

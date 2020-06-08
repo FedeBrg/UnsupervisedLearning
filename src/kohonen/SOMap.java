@@ -1,8 +1,5 @@
 package kohonen;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,9 +29,7 @@ public class SOMap {
         }
     }
 
-    public Neuron getNeuronAt(int row, int col){
-        return this.neurons.get(row*cols + col);
-    }
+
 
     public void initializeNeuronsRandom(){
         Random r = new Random();
@@ -109,16 +104,17 @@ public class SOMap {
     }
 
     public double getRadius(int epoch){
-        double lambda = (500 * inputSize)/Math.log(radius);
+        double lambda = (500 * 28)/Math.log(radius);
         return radius * Math.exp(-(epoch/lambda));
     }
 
     private double getLearningRate(int epoch){
         double lr = learningRate;
 
-        if (1.0/epoch < learningRate){
-            lr = 1.0/epoch;
+        if (1.0/(Math.sqrt(epoch)+1) < learningRate){
+            lr = 1.0/(Math.sqrt(epoch)+1);
         }
+
 
         return lr;
     }
@@ -127,6 +123,7 @@ public class SOMap {
     private double getLearningRateWithLamda(int epoch){
         double lambda = (500 * inputSize)/Math.log(radius);
         double toReturn = learningRate * Math.exp(-(epoch/lambda));
+
         return (toReturn <= 0.0)? 0.000001 : toReturn;
     }
 }
