@@ -63,8 +63,6 @@ public class Kohonen {
             normalize.add(tmp);
         }
 
-        System.out.println(normalize);
-
         SOMap map = new SOMap(rows,cols,inputSize,0.8, Math.sqrt(rows * cols));
 //        map.initializeNeuronsExamples(normalize);
         map.initializeNeuronsRandom();

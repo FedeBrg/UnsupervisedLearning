@@ -62,7 +62,7 @@ public class Oja {
             for(int j = 0;j<n.getWeights().size();j++){
                 sum+=normalize.get(i).get(j)*n.getWeights().get(j);
             }
-            System.out.printf("%s: %f\n",countries.get(i),sum);
+            //System.out.printf("%s: %f\n",countries.get(i),sum);
         }
 
     }
